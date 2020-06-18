@@ -1,20 +1,13 @@
-const http = require('http')
-const server = http.createServer(handler)
+const express = require('express')
+const app = express()
+const port = 5001
 
-function handler (req,res){
-  console.log(req.url)
-  if(req.url === '/hello'){
-    // 設定回應碼，還有我們的內容格式
-    res.writeHead(200,{
-      'Content-Type':'text/html'
-    })
-    res.write('<h1>hello!</h1>')
-  }else if(req.url === '/bye'){
-    res.write('bye')
-  }else{
-    res.write('invalid url')
-  }
-  res.end()
-}
+const todoController = require('./controllers/todo')
 
-server.listen(5001)
+app.set('view engine', 'ejs')
+
+app.get('/todos', todoController.getAll)
+app.get('/todos/:id', todoController.get)
+
+// 後面是callback function
+app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`))
