@@ -16,6 +16,13 @@ const todoModel ={
       if (err) return cb(err);
       cb (null,results)
     });
+  },
+
+  add :(content,cb) =>{
+    db.query('insert into todos(content) values(?) ', [content], (err) => {
+      if (err) return cb(err);
+      cb (null)
+    });
   }
 }
 

@@ -1,10 +1,12 @@
 <h1> Todos </h1>
 
+<a href="/">add todo</a>
 <ul>
 <% for(let i=0; i<todos.length; i++){ %>
   <!-- 這邊ejs的輸出是直接這樣打=  -->
   <!-- 這是一種打法 -->
   <!-- <li><%= todos[i].id %> : <%= todos[i].content %> </li> -->
+  <!-- 這是字串拼接的打法 -->
   <li><%= todos[i].id + ': ' +  todos[i].content %> </li>
 <% } %>   
 </ul> 

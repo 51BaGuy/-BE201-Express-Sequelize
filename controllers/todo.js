@@ -21,7 +21,23 @@ const todoController = {
         todo: results[0]
       })
     })
+  },
+
+  // 去把我們的資料渲染上去
+  addTodo: (req,res)=>{
+    res.render('addTodo')
+  },
+
+  //處理我們的資料
+  newTodo: (req,res)=>{
+    // 把我們解析的資料拿出來
+    const content = req.body.content
+    todoModel.add(content,(err)=>{
+      if (err) return console.log(err)
+      res.redirect('/todos') 
+    })
   }
+
 }
 
 // 輸出資料
