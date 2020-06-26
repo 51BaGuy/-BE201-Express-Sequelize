@@ -3,6 +3,8 @@
 <ul>
 <% for(let i=0; i<todos.length; i++){ %>
   <!-- 這邊ejs的輸出是直接這樣打=  -->
-  <li><%= todos[i] %> </li>
+  <!-- 這是一種打法 -->
+  <!-- <li><%= todos[i].id %> : <%= todos[i].content %> </li> -->
+  <li><%= todos[i].id + ': ' +  todos[i].content %> </li>
 <% } %>   
 </ul> 
