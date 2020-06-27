@@ -25,9 +25,7 @@ const todoController = {
 
   // 去把我們的資料渲染上去
   addTodo: (req,res)=>{
-    res.render('addTodo',{
-      isLogin: req.session.isLogin
-    })
+    res.render('addTodo')
   },
 
   //處理我們的資料
