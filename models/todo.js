@@ -15,7 +15,7 @@ const todoModel ={
     db.query('SELECT * from todos where id = ? ',[id], (err, results) => {
       if (err) return cb(err);
       cb (null,results)
-    });
+    })
   },
 
   add :(content,cb) =>{

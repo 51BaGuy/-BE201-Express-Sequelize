@@ -7,6 +7,8 @@ const app = express()
 const port = 5001
 
 const todoController = require('./controllers/todo')
+////// 把userController引入進來 //////
+const userController = require('./controllers/user')
 
 app.set('view engine', 'ejs')
 
@@ -27,35 +29,31 @@ app.use(session({
 }))
 
 app.use((req,res,next)=>{
-  res.locals.isLogin = req.session.isLogin
+  res.locals.username = req.session.username
   res.locals.errorMessage = req.flash('errorMessage')
   next()
 })
 
+app.post('/todos',todoController.newTodo)
 app.get('/todos', todoController.getAll)
 app.get('/todos/:id', todoController.get)
 // 新增一個跑出表單的路由
-app.get('/',todoController.addTodo)
-//新增一個處理資料的路由
-app.post('/todos',todoController.newTodo)
-// 新增一個登入的路由
-app.get('/login',(req,res)=>{
-  res.render('login')
-})
-app.post('/login',(req,res)=>{
-  if(req.body.password ==='abc') {
-    req.session.isLogin = true
-    res.redirect('/')
-  }else{
-    req.flash('errorMessage', 'Please input the correct password')
-    res.redirect('/login')
-  }
+app.get('/',(req,res)=>{
+  res.render('index')
 })
 
-app.get('/logout',(req,res)=>{
-  req.session.isLogin=false
-  res.redirect('/')
-})
+// 做一個next的middlware
+function redirectBack(req,res){
+  res.redirect('back')
+}
+
+// 新增一個登入的路由
+app.get('/login',userController.login)
+app.post('/login',userController.handleLogin,redirectBack)
+app.get('/logout',userController.logout)
+app.get('/register',userController.register)
+app.post('/register',userController.handleRegister,redirectBack)
+
 
 // 後面是callback function
 app.listen(port, () => {
