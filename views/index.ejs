@@ -14,10 +14,13 @@
 <% } %>
 
 <!-- 我們這邊用forEach語法 -->
-
 <% comments.forEach(function(comment) { %>
   <div>
     <h2><%= comment.nickname  %> </h2>
     <p><%= comment.content  %> </p>
+    <!-- 確認是這位使用者 -->
+    <% if(username===comment.username) { %> 
+    <a href="/delete_comments/<%= comment.id %> ">刪除</a>
+    <% } %> 
   </div>
 <% }) %> 
