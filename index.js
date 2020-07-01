@@ -58,6 +58,9 @@ app.post('/register',userController.handleRegister,redirectBack)
 app.post('/comments',commentController.add)
 // 這是要有id的寫法
 app.get('/delete_comments/:id',commentController.delete)
+// 我們去寫編輯留言的路由 //
+app.get('/update_comments/:id',commentController.update)
+app.post('/update_comments/:id',commentController.handleUpdate)
 
 
 // 後面是callback function

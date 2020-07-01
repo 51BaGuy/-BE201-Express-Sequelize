@@ -26,6 +26,20 @@ const commentController = {
       })
     })
   },
+  // 我們編輯按鈕
+  update: (req, res) => {
+    commentModel.get(req.params.id, (err, results) => {
+      res.render('update', {
+        comment: results
+      })
+    })
+  },
+  // 我們的編輯邏輯要有權限控制
+  handleUpdate: (req, res) => {
+    commentModel.update(req.session.username, req.params.id,req.body.content, (err) => {
+      res.redirect('/')
+    })
+  },
   // 我們要有username去做權限管理
   delete: (req, res) => {
     commentModel.delete(req.session.username, req.params.id, (err) => {
@@ -33,8 +47,6 @@ const commentController = {
     }
     )
   }
-
-
 }
 
 // 輸出資料
