@@ -9,6 +9,8 @@ const port = 5001
 const todoController = require('./controllers/todo')
 ////// 把userController引入進來 //////
 const userController = require('./controllers/user')
+const commentController = require('./controllers/comment')
+const userModel = require('./models/user')
 
 app.set('view engine', 'ejs')
 
@@ -37,22 +39,23 @@ app.use((req,res,next)=>{
 app.post('/todos',todoController.newTodo)
 app.get('/todos', todoController.getAll)
 app.get('/todos/:id', todoController.get)
-// 新增一個跑出表單的路由
-app.get('/',(req,res)=>{
-  res.render('index')
-})
+// 做一個主頁 //
+app.get('/',commentController.index)
 
 // 做一個next的middlware
 function redirectBack(req,res){
   res.redirect('back')
 }
 
-// 新增一個登入的路由
+// 做出各種路由 //
 app.get('/login',userController.login)
 app.post('/login',userController.handleLogin,redirectBack)
 app.get('/logout',userController.logout)
 app.get('/register',userController.register)
 app.post('/register',userController.handleRegister,redirectBack)
+
+// 做一個新增留言的路由 //
+app.post('/comments',commentController.add)
 
 
 // 後面是callback function

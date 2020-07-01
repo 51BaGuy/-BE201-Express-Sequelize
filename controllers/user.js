@@ -4,7 +4,7 @@ const saltRounds = 10;
 
 ///// 我們這邊用非同步的方式去做調用 //////
 const userController = {
-  
+
   login: (req, res) => {
     res.render('login')
   },
@@ -18,21 +18,22 @@ const userController = {
     userModel.get(username, (err, user) => {
       // 如果執行錯誤 //
       if (err) {
-       req.flash('errorMessage', err.toString())
-       return next()
-      }
-      // 如果沒有這個user資料 //
-      if (!user){
-        req.flash('errorMessage','使用者不存在')
+        req.flash('errorMessage', err.toString())
         return next()
       }
-      bcrypt.compare(password, user.password, function (err, isSuccess){
-        if(err || !isSuccess){
+      // 如果沒有這個user資料 //
+      if (!user) {
+        req.flash('errorMessage', '使用者不存在')
+        return next()
+      }
+      // 我們isSuccess不能用req會衝到
+      bcrypt.compare(password, user.password, function (err, isSuccess) {
+        if (err || !isSuccess) {
           req.flash('errorMessage', '密碼錯誤')
           return next()
         }
         req.session.username = user.username
-        res.redirect('/')  
+        res.redirect('/')
       })
     })
   },
@@ -49,6 +50,7 @@ const userController = {
       req.flash('errorMessage', '缺少必要欄位')
       return next()
     }
+    // 判斷密碼是否正確用bcrypt這個library
     bcrypt.hash(password, saltRounds, function (err, hash) {
       if (err) {
         req.flash('errorMessage', err.toString())
