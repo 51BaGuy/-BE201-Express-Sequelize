@@ -1,5 +1,25 @@
-<h1>編輯文章</h1>
-<form method="POST" action="/update_comments/<%= comment.id %> ">
-  <textarea name="content"><%= comment.content %> </textarea>
-  <input type="submit" />
-</form>
+<!doctype html>
+<html>
+
+<head>
+  <%- include('template/head'); %>
+</head>
+
+<body>
+  <%- include('template/navbar'); %>
+  <!-- 要加上container整個型才可以被拉出來 -->
+
+  <div class="container">
+    
+    <form method="POST" action="/update_comments/<%= comment.id %> ">
+      <div class="form-group">
+        <label>編輯文章</label>
+        <textarea name="content" class="form-control"><%= comment.content %></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">提交</button>
+    </form>
+   
+</body>
+
+</html>
+
