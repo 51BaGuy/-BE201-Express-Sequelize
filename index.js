@@ -1,16 +1,16 @@
 const express = require('express')
-const db = require('./db')
+
 const bodyParser = require('body-parser')
 const session = require('express-session')
 const flash = require('connect-flash')
 const app = express()
 const port = 5001
 
-const todoController = require('./controllers/todo')
+
 ////// 把userController引入進來 //////
 const userController = require('./controllers/user')
 const commentController = require('./controllers/comment')
-const userModel = require('./models/user')
+
 
 app.set('view engine', 'ejs')
 
@@ -36,10 +36,7 @@ app.use((req,res,next)=>{
   next()
 })
 
-app.post('/todos',todoController.newTodo)
-app.get('/todos', todoController.getAll)
-app.get('/todos/:id', todoController.get)
-// 做一個主頁 //
+
 app.get('/',commentController.index)
 
 // 做一個next的middlware
@@ -65,7 +62,6 @@ app.post('/update_comments/:id',commentController.handleUpdate)
 
 // 後面是callback function
 app.listen(port, () => {
-  // 連線到database
-  db.connect()
+ 
   console.log(`Example app listening at http://localhost:${port}`)
 })

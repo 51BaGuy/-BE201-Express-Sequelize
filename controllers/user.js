@@ -1,6 +1,9 @@
-const userModel = require('../models/user')
+
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
+const db = require('../models')
+// 去拿裡面的user.js
+const User = db.User
 
 ///// 我們這邊用非同步的方式去做調用 //////
 const userController = {
@@ -14,13 +17,12 @@ const userController = {
       req.flash('errorMessage', '該填的沒填呦!')
       return next()
     }
-
-    userModel.get(username, (err, user) => {
-      // 如果執行錯誤 //
-      if (err) {
-        req.flash('errorMessage', err.toString())
-        return next()
+    // 去找出我們要的username然後去比對，這邊會順著promise語法去找出user結果，還有err錯誤
+    User.findOne({
+      where: {
+        username
       }
+    }).then(user => {
       // 如果沒有這個user資料 //
       if (!user) {
         req.flash('errorMessage', '使用者不存在')
@@ -33,8 +35,13 @@ const userController = {
           return next()
         }
         req.session.username = user.username
+        // 找對應的id到時候比對用
+        req.session.userId = user.id
         res.redirect('/')
       })
+    }).catch(err => {
+      req.flash('errorMessage', err.toString())
+      return next()
     })
   },
 
@@ -57,17 +64,17 @@ const userController = {
         return next()
       }
       // 把我們註冊的資料用我們的邏輯放進去資料庫，並且看有沒有出錯，沒有錯誤的話就把username存進去session裡面 //
-      userModel.add({
+      User.create({
         username,
         nickname,
         password: hash
-      }, (err) => {
-        if (err) {
-          req.flash('errorMessage', err.toString())
-          return next()
-        }
+      }).then(user => {
         req.session.username = username
+        req.session.userId = user.id
         res.redirect('/')
+      }).catch(err => {
+        req.flash('errorMessage', err.toString())
+        return next()
       })
     });
   },
@@ -76,9 +83,6 @@ const userController = {
     req.session.username = null
     res.redirect('/')
   }
-
-
-
 }
 
 // 輸出資料

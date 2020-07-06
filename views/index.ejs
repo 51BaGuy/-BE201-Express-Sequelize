@@ -24,10 +24,10 @@
     <% comments.forEach(function(comment) { %>
     <div class="card" style="width: 18rem; margin-top: 10px;">
       <div class="card-body">
-        <h5 class="card-title"><%= comment.nickname  %></h5>
+        <h5 class="card-title"><%= comment.Usernickname  %></h5>
         <p class="card-text"><%= comment.content  %></p>
         <!-- 確認是這位使用者 -->
-        <% if(username===comment.username) { %>
+        <% if(username===comment.User.username) { %>
         <a href="/delete_comments/<%= comment.id %> ">刪除</a>
         <a href="/update_comments/<%= comment.id %> ">編輯</a>
         <% } %>
