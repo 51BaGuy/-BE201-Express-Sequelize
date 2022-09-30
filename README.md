@@ -1,4 +1,3 @@
-# -BE201-Express-Sequelize
 
 # 簡易留言板加上會員註冊系統
 這個是使用Node.js + Express + MySQL建立的專案，搭配EJS模板去做前端頁面渲染，
