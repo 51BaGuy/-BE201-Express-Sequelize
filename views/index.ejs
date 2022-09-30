@@ -7,33 +7,38 @@
 
 <body>
   <%- include('template/navbar'); %>
-  <!-- 要加上container整個型才可以被拉出來 -->
+    <!-- 要加上container整個型才可以被拉出來 -->
 
-  <div class="container">
-    <% if (username) { %>
-    <form method="POST" action="/comments">
-      <div class="form-group">
-        <label>留言內容</label>
-        <textarea name="content" class="form-control"></textarea>
-      </div>
-      <button type="submit" class="btn btn-primary">送出留言</button>
-    </form>
-    <% } %>
-
-    <!-- 我們這邊用forEach語法 -->
-    <% comments.forEach(function(comment) { %>
-    <div class="card" style="width: 18rem; margin-top: 10px;">
-      <div class="card-body">
-        <h5 class="card-title"><%= comment.nickname  %></h5>
-        <p class="card-text"><%= comment.content  %></p>
-        <!-- 確認是這位使用者 -->
-        <% if(username===comment.username) { %>
-        <a href="/delete_comments/<%= comment.id %> ">刪除</a>
-        <a href="/update_comments/<%= comment.id %> ">編輯</a>
+    <div class="container">
+      <% if (username) { %>
+        <form method="POST" action="/comments">
+          <div class="form-group">
+            <label>留言內容</label>
+            <textarea name="content" class="form-control"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">送出留言</button>
+        </form>
         <% } %>
-      </div>
-    </div>
-    <% }) %>
+
+          <!-- 我們這邊用forEach語法 -->
+          <% comments.forEach(function(comment) { %>
+            <div class="card" style="width: 18rem; margin-top: 10px;">
+              <div class="card-body">
+                <h5 class="card-title">
+                  <%= comment.User.nickname %>
+                </h5>
+                <p class="card-text">
+                  <%= comment.content %>
+                </p>
+                <!-- 確認是這位使用者 -->
+                <!-- 因為把comment跟user join在一起所以要寫comment.User.username -->
+                <% if(username===comment.User.username) { %>
+                  <a href="/delete_comments/<%= comment.id %> ">刪除</a>
+                  <a href="/update_comments/<%= comment.id %> ">編輯</a>
+                  <% } %>
+              </div>
+            </div>
+            <% }) %>
 </body>
 
 </html>
