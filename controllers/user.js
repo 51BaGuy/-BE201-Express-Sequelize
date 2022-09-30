@@ -69,6 +69,7 @@ const userController = {
         nickname,
         password: hash
       }).then(user => {
+        //用session傳username
         req.session.username = username
         req.session.userId = user.id
         res.redirect('/')

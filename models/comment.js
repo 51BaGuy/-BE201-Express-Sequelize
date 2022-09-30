@@ -5,6 +5,7 @@ module.exports = (sequelize, DataTypes) => {
     UserId: DataTypes.INTEGER
   }, {});
   Comment.associate = function (models) {
+    //寫關聯用的(Comment是連結User資料庫)
     Comment.belongsTo(models.User)
   }
 

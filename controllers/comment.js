@@ -23,6 +23,7 @@ const commentController = {
   },
   index: (req, res) => {
     Comment.findAll({
+      //要把user include進來才有使用者資料
       include: User
     }).then(comments => {
       res.render('index', {
