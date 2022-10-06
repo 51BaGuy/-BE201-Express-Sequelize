@@ -15,6 +15,7 @@
 * 使用Bootstrap - 使用bootstrap去美化介面，增加使用者體驗
 * 防止SQL injection - 使用prepare statement
 * 防止偽造身分 - 使用middleware Session
+* 部署-deploy到heroku上
 ## Environment SetUp - 環境建置
 * Node.js
 * MySQL
